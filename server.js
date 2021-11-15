@@ -41,7 +41,7 @@ app.get("/app/user/:id", (req, res) => {
 	res.status(200).json(stmt);
 });
 // UPDATE a single user (HTTP method PATCH) at endpoint /app/update/user/:id
-app.patch("/app/user/:id", (req, res) => {
+app.patch("/app/update/user/:id", (req, res) => {
 	const user = req.body.user;
 	let pass = req.body.pass;
 	if (pass) pass = md5(pass);
@@ -49,7 +49,10 @@ app.patch("/app/user/:id", (req, res) => {
 	res.status(201).json({'message': `1 record created: ID ${req.params.id} (200)`});
 });
 // DELETE a single user (HTTP method DELETE) at endpoint /app/delete/user/:id
-
+app.delete("/app/delete/user/:id", (req, res) => {
+	const stmt = db.prepare("DELETE FROM userinfo WHERE id = ?").run(req.params.id);
+	res.status(200).json({'message': `1 record deleted: ID ${req.params.id} (200)`});
+});
 // Default response for any other request
 app.use(function(req, res){
 	res.json({"message":"Your API is working!"});
