@@ -17,13 +17,13 @@ app.listen(HTTP_PORT, () => {
 });
 // READ (HTTP method GET) at root endpoint /app/
 app.get("/app/", (req, res, next) => {
-    res.json({"message":"Your API works! (200)"});
+    //res.json({"message":"Your API works! (200)"});
 	res.status(200);
 });
 
 // Define other CRUD API endpoints using express.js and better-sqlite3
 // CREATE a new user (HTTP method POST) at endpoint /app/new/
-app.post("/app/new/user", (req, res) => {
+app.post("/app/new", (req, res) => {
 	const user = req.body.user;
 	const pass = md5(req.body.pass);
 	const stmt = db.prepare("INSERT INTO userinfo (user, pass) VALUES (?, ?)").run(user, pass);
